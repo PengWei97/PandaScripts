@@ -1,0 +1,34 @@
+% IdentifyAndSmoothGrains.m
+%
+% Purpose:
+% This function identifies and smooths grains within an EBSD dataset. It calculates grains,
+% applies smoothing, and removes grains smaller than a specified minimum size.
+%
+% Inputs:
+% - ebsd: The EBSD dataset
+% - threshold: The threshold for grain boundary misorientation
+% - smoothFacter: The factor used for smoothing the grains
+% - minGrainSize: The minimum grain size for grains to be retained
+%
+% Outputs:
+% - grains: The identified and smoothed grains
+% - ebsd: The updated EBSD dataset
+
+function [grains, ebsd] = IdentifyAndSmoothGrains(ebsd, threshold, smoothFacter, minGrainSize)
+  fprintf('Running IdentifyAndSmoothGrains\n');
+
+  % Initial grain calculation
+  [grains, ebsd.grainId, ebsd.mis2mean] = calcGrains(ebsd, 'threshold', threshold);
+
+  % Smooth the grains
+  grains = smooth(grains, smoothFacter);
+
+  % Remove grains smaller than the specified minimum size
+  ebsd(grains(grains.grainSize < minGrainSize)) = [];
+
+  % Recalculate grains after removal of small grains
+  [grains, ebsd.grainId, ebsd.mis2mean] = calcGrains(ebsd, 'threshold', threshold);
+
+  % Smooth the grains again after recalculation
+  grains = smooth(grains, smooth_factor);
+end
