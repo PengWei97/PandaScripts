@@ -12,14 +12,14 @@ setMTEXpref('xAxisDirection','west');
 setMTEXpref('zAxisDirection','outOfPlane');
 
 %% Specify File Names
-pname = 'D:\0同步\p23_GNS-Ni_Ti_AGG_2024\exp_data\ebsd_ctf\';
+pname = 'E:\Github\PandaData\p23_GMSNi_AGG_2024\exp_data\ebsd_ctf\'; % E:\同步\p23_GNS-Ni_Ti_AGG_2024\exp_data
 time_points = [5.0, 10.0, 20.0, 30.0];
-local_names = {'level1', 'level2', 'excerpt'};
+local_names = {'level1', 'level2', 'level1a2','excerpt'};
 
 num_type_figures = 2;
-for i_time = 1:1 % 1:length(time_points)
+for i_time = 2:2 % 1:length(time_points)
     % path to files
-    input_file = fullfile(pname, sprintf('Ni_%dmin_%s.ctf', time_points(i_time), local_names{3}));
+    input_file = fullfile(pname, sprintf('Ni_%dmin_%s_local1.ctf', time_points(i_time), local_names{3}));
     %% Import the Data
     ebsd = EBSD.load(input_file,CS,'interface','ctf',...
       'convertEuler2SpatialReferenceFrame');
@@ -37,11 +37,5 @@ for i_time = 1:1 % 1:length(time_points)
     hold off;
 end
 
-% Function to create a mesh grid
-function xy = createMeshGrid(xMin, xMax, yMin, yMax, stepSize)
-  [X, Y] = meshgrid(xMin:stepSize:xMax, yMin:stepSize:yMax);
-  xy = [X(:) Y(:)];
-end
-
-% D:\Github\PandaScripts\p23-GNSNi-2024\a_experiments\exp1_draw_ipf_maps.m
+% E:\Github\PandaScripts\p23-GNSNi-2024\a_experiments\exp1_draw_ipf_maps.m
 
