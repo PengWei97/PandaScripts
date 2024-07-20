@@ -4,6 +4,7 @@ classdef ComputeStressParams
       eigenstrainNames
       baseName
       elasticityTensor
+      crysRot
       rtol
       absTol
       maxIter
@@ -25,7 +26,8 @@ classdef ComputeStressParams
           addParameter(p, 'crystalPlasticityModels', {});
           addParameter(p, 'eigenstrainNames', {});
           addParameter(p, 'baseName', '');
-          addParameter(p, 'elasticityTensor', eye(3));
+          addParameter(p, 'elasticityTensor', zeros(3,3,3,3));
+          addParameter(p, 'crysRot', zeros(3,3));
           addParameter(p, 'rtol', 1e-6);
           addParameter(p, 'absTol', 1e-6);
           addParameter(p, 'maxIter', 100);
@@ -46,6 +48,7 @@ classdef ComputeStressParams
           obj.eigenstrainNames = p.Results.eigenstrainNames;
           obj.baseName = p.Results.baseName;
           obj.elasticityTensor = p.Results.elasticityTensor;
+          obj.crysRot = p.Results.crysRot;
           obj.rtol = p.Results.rtol;
           obj.absTol = p.Results.absTol;
           obj.maxIter = p.Results.maxIter;
